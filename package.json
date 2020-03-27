@@ -1,0 +1,23 @@
+{
+  "name": "mywebsite",
+  "version": "1.0.0",
+  "description": "This is my website",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juanpablopiano/mywebsite.git"
+  },
+  "author": "JuanPablopiano",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/juanpablopiano/mywebsite/issues"
+  },
+  "homepage": "https://github.com/juanpablopiano/mywebsite#readme",
+  "dependencies": {
+    "ejs": "^3.0.1",
+    "express": "^4.17.1"
+  }
+}
