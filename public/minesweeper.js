@@ -1,5 +1,5 @@
-let rows = 12;
-let colums = 12;
+let rows = 10;
+let colums = 10;
 let grid = rows * colums; // el numero total de celdas
 let cells = []; // el array que va a contener todas las celdas
 let mines = Math.floor(grid * 0.1); // numero de minas que usara el juego
@@ -7,9 +7,17 @@ let firstClick = false; // chequea si ya se hizo el primer click
 let game = "not started"; //chequea el estado del juego
 let goodCells = grid - mines; // es la cantidad de minas sin celda. Cuando llegue a 0 se gana el juego
 let nFlags = mines; // numero maximo de banderitas que se pueden poner, que es igual al numero de minas
+let seconds = 0;
+let cancelTimer = 0;
 
+let secDisplay = document.querySelector("#time");
 let board = document.querySelector("#board");
 let replay = document.querySelector("#replay");
+let gameDisplay = document.querySelector("#game");
+
+board.addEventListener('contextmenu', e => {
+    e.preventDefault();
+});
 
 replay.addEventListener('click', () => {
     cells = [];
@@ -20,7 +28,16 @@ replay.addEventListener('click', () => {
     goodCells = grid - mines;
     nFlags = mines;
     cells = createCells(rows, colums);
+    clearInterval(cancelTimer);
+    gameDisplay.textContent = "Game: not started";
+    seconds = 0;
+    secDisplay.innerText = String(seconds).padStart(3, "0");
 });
+
+function incrementSeconds() {
+    seconds++;
+    secDisplay.innerText = String(seconds).padStart(3, "0");
+}
 
 class Mine { // esta es la clase mina, aqui deberia poner los metodos, tambien falta crear la clase contenedor
     constructor(ypos, xpos, el) {
@@ -162,9 +179,10 @@ function clickEvent(_c, _i, _j) {
             _c.firstClicked = true;
             cells = setMines(mines, cells); // esta funcion le pone las minas a los elementos
             numbers();
-
+            cancelTimer = setInterval(incrementSeconds, 1000);
             
             game = "started" // inicializa el juego supuestamente
+            gameDisplay.textContent = "Game: " + game.padEnd(11, " ");
         }
         
         if (_c.flagged) {}
@@ -209,16 +227,21 @@ function lose(c) {
     if (flagged && !mined) {
         element.textContent = "X";
         element.style.color = "red";
+        element.style.backgroundColor = "#2c2c2c";
     } else if (!flagged) {
         element.style.backgroundColor = "rgb(170, 20, 25)";
+        element.textContent = "X";
+        element.style.color = "black";
         game = "lost";
 	}
 	
-	goOverCells((c) => {
-		if (c.mined) {
+	goOverCells(rows, colums, (c) => {
+		if (c.number === -1 && !c.flagged) {
 			c.el.style.backgroundColor = "rgb(170, 20, 25)";
 		}
-	});
+    });
+    gameDisplay.textContent = "Game: " + game.padEnd(11, " ");
+    clearInterval(cancelTimer);
 }
  
 //Funcion que ejecuta el click
@@ -257,6 +280,17 @@ function click(c) {
 				lost2(c);
 			}
         }
+    }
+
+    if (game === "won") {
+        gameDisplay.textContent = "Game: " + game.padEnd(11, " ");
+        clearInterval(cancelTimer);
+
+        goOverCells(rows, colums, (c) => {
+            if (c.mined) {
+                c.el.innerHTML = '<span id="a">|</span><span id="b">></span>';
+            }
+        });
     }
 }
 
@@ -347,11 +381,12 @@ function openCell(_cell) {
 		game = "won";
 	}
 
-    _cell.el.style.backgroundColor = "#232323";
+    _cell.el.style.backgroundColor = "#2c2c2c";
     _cell.clicked = true;
 
     if (_cell.number > 0) {
         _cell.el.textContent = _cell.number;
+        _cell.el.className = _cell.el.className + ` number${_cell.number}`;
     }
 }
 

@@ -18,14 +18,32 @@
 
 body {
     margin: 0;
-    background-color: #232323;
+    background-color: #2c2c2c;
     font-family: sans-serif;
     font-weight: 600;
     color: white;
-    font-family: 'Baloo 2', cursive;
+    font-family: 'Bellota Text', cursive;
+}
+
+#info-header {
+    display: flex;
+    justify-content: center;
+}
+
+#info {
+    width: 600px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.info {
+    width: 200px;
+    height: 25px;
+    margin: 0 30px;
 }
 
 #flex-container {
+    
     display: flex;
     justify-content: center;
 }
@@ -42,10 +60,12 @@ body {
     grid-template-columns: repeat(10, 40px);
     grid-gap: 4px;
     grid-auto-rows: 40px;
+    background-color: #2c2c2c;
+    padding: 4px;
 }
 
 .item {
-    background-color: rgb(20, 20, 163);
+    background-color: #E2E2E2;
     text-align: center;
     color: white;
     line-height: 40px;
@@ -53,22 +73,48 @@ body {
 }
 
 .item:hover {
-    background-color: rgb(62, 75, 197);
+    background-color: rgb(151, 156, 202);
     transition: all 0.5s;
-}
-
-#square {
-    background-color: indigo;
-    width: 100px;
-    height: 100px;
-    margin: 10px;
 }
 
 #a {
     color: black;
-    font-weight: 800;
+    font-weight: 700;
 }
 #b {
     color: red;
-    font-weight: 800;
+    font-weight: 700;
+}
+
+.number1 {
+    color: #0000FF;
+    font-weight: 700;
+}
+.number2 {
+    color: #0B7713;
+    font-weight: 700;
+}
+.number3 {
+    color: #FC0707;
+    font-weight: 700;
+}
+.number4 {
+    color: #0F104C;
+    font-weight: 700;
+}
+.number5 {
+    color: #491702;
+    font-weight: 700;
+}
+.number6 {
+    color: #EE145B;
+    font-weight: 700;
+}
+.number7 {
+    color: #FFF200;
+    font-weight: 700;
+}
+.number8 {
+    color: #555555;
+    font-weight: 700;
 }
